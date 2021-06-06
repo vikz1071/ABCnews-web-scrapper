@@ -6,9 +6,6 @@ Created on Fri Jun  4 22:19:48 2021
 @author: vigneshwar
 """
 
-
-   
-
 import requests
 from bs4 import BeautifulSoup
 
@@ -24,61 +21,37 @@ class ABCnews:
         return html
     
     
-    def article_content_lis(html):
+    def summary(html):
         
         if html:
-            content = html.find('div', id = 'body')
-            content_p  = content.find_all('div')[1]
-            print(content_p)
-            return content_p.find_all('p')
-        return None
-    
-    """
-        
-    def article_content(html):
-        para = ABCnews.article_content_lis(html) 
-        nav = para.find('p',class_='1HzXw')
-        print(nav)
-        
-   """     
-"""
-        lis = DailyNation.get_topics_lis()
-        topics = []
-        for li in lis:
-            topics.append(li.find('a').text.lower())
-        return topics
-        """
-"""
-    def get_text():
-        lis  = ABCnews.article_title()
-        title = []
-        for h1 in lis:
-            title.append(h1.text.lower())
-        return title
-        
-"""
-       
-"""  
-    def get_topics_lis():
-        html = Washingtonpost.get_html(Washingtonpost.baseurl)
+            content = html.find('div', class_="YDnEu OK4xB")
+            for p in content.find_all('p', class_="_1HzXw"):
+                summary = content.p.string
+            print ('\n Overview - First paragraph in this article:', summary)
+            
+    def get_title(html):
         if html:
-            nav = html.find('div',class_="relative side-nav")           
-            topics_ul = nav.find_all('div', class_="dib flex font--subhead white hover-bg-black relative bold")
-            return topics_ul.find_all('li')
-        return none
-"""   
-   
+            title_content = html.find('div', class_="_3ANn5")
+            for h1 in title_content:
+                title = title_content.h1.string
+                print('\nThe title of this article is:',title)
+                break
+        
+    def get_author_name(html):
+        if html:
+            author_name = html.find('span',class_="W-g-R _14nkQ _3BwtN _2eB4R _3qdyT")
+            for a in author_name.find_all('a',class_="_2msBb vOtE5 _1wNLk _3i4V4 _1tAZ1"):
+                author = author_name.a.text
+                print('\nAuthored by:',author)
+                break
+            
+ 
+
 if __name__ == '__main__':
     
     url = input('Enter ABC news URL:')
     ABCnews_html = ABCnews.get_html(url)
-    lis = ABCnews.article_content_lis(ABCnews_html)
-    c = ABCnews.article_content(ABCnews_html)
-    print(c)
-   ## ABCnews_title_html = ABCnews.article_title(ABCnews_html)
+    ABCnews.get_title(ABCnews_html)
+    ABCnews.summary(ABCnews_html)
+    ABCnews.get_author_name(ABCnews_html)
     
-  
-    
-    
-   ## ABCnews_title = ABCnews.get_text()
-
