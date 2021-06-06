@@ -1,2 +1,2 @@
 # ABCnews-web-scrapper
-We want to build a simple web scraper that will return the content of a news article when given a specific URL.
+A simple web scraper that will return the title, author name and overview of a ABCnews article when given a specific URL.
